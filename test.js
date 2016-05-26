@@ -1,6 +1,6 @@
-var xbox = require('node-xboxdrv')
+var xbox = require("./main.js");
 
-var test = new xbox.xbox('1bad','fa01');
+var test = new xbox('1bad','fa01');
 test.on('a',function(){console.log('a');})
 test.on('b',function(){console.log('b');})
 test.on('x',function(){console.log('x');})

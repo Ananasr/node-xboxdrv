@@ -4,8 +4,8 @@ var controls = require('./config.json');
 //'1bad:fa01'
 
 function xbox(pid,vid,options){
-	var args= ['--device-by-id='+pid+':'+vid,"--type="+(options.type?options.type:'xbox360')];
-	if(options.deadzone)args.push("--deadzone="+options.deadzone);
+	var args= ['--device-by-id='+pid+':'+vid,"--type="/*+(options.type?options.type:'xbox360')*/];
+	//if(options.deadzone)args.push("--deadzone="+options.deadzone);
 	var xboxdrv = spawn('xboxdrv',args);
 	var regExp = /[A-za-z0-9]+:\s*([\d-]+)/g;
 	this.previous;
@@ -16,11 +16,11 @@ function xbox(pid,vid,options){
 		var temp;
 		var input = [];
 
-		//Push inputs into a nice array. regex.exec will return the next match each time it is called 
+		//Push inputs into a nice array. regex.exec will return the next match each time it is called
 		while((temp=regExp.exec(data)) !== null){
-			input.push(temp[1]);		
+			input.push(temp[1]);
 		}
-		
+
 		//If this is the first run set previous as current input array
 		if(!this.previous){
 			this.previous = input;
@@ -32,7 +32,7 @@ function xbox(pid,vid,options){
 			var callback = this.actions[i].callback;
 			var position = controls[action].pos; //What part of the input array the relevant data is in
 			var changed = input[position] !== this.previous[position];//Was there actually input for what we are listening for?
-			
+
 			if(type==="axis" && changed && parseInt(input[position]) !== 0){
 				//Axis type listeners will have their callbacks take postion data
 				callback(parseInt(input[position]));
@@ -45,7 +45,7 @@ function xbox(pid,vid,options){
 		}
 
 		this.previous = input;
-		//console.log(this.previous);		
+		//console.log(this.previous);
 	}
 
 	//We need to bind "this" so the callback can access the parent functions' this variables
