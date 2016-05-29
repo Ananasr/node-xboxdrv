@@ -21,6 +21,8 @@ function xbox(pid, vid, options) {
             input.push(temp[1]);
         }
 
+	console.log(input);
+
         //If this is the first run set previous as current input array
         if (!this.previous) {
             this.previous = input;
@@ -32,7 +34,7 @@ function xbox(pid, vid, options) {
             var callback = this.actions[i].callback;
             var position = controls[action].pos; //What part of the input array the relevant data is in
             var changed = input[position] !== this.previous[position]; //Was there actually input for what we are listening for?
-
+	    
             if (type === "axis" && changed && parseInt(input[position]) !== 0) {
                 //Axis type listeners will have their callbacks take postion data
                 callback(parseInt(input[position]));
